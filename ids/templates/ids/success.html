@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Success</title>
+    <link rel="stylesheet" href="{% static 'ids/styles.css' %}">
+</head>
+<body>
+    <h1>Success! Your report has been submitted.</h1>
+    <a href="{% url 'report_id' %}">Report Another</a>
+    <a href="{% url 'search_id' %}">Search for Lost/Found IDs</a>
+
+</body>
+</html>

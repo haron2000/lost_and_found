@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Lost/Found IDs</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'ids/styles.css' %}">
+</head>
+<body>
+    <h1>Search for Lost or Found IDs</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Search</button>
+    </form>
+
+    {% if results is not None %}
+        <h2>Search Results</h2>
+        {% if results %}
+            <div class="card-container">
+                {% for id in results %}
+                    <div class="card">
+                        <h5>ID Number: {{ id.id_number }}</h5>
+                        <p><strong>Status:</strong> {{ id.status }}</p>
+                        <p><strong>Location:</strong> {{ id.location }}</p>
+                        <p><strong>Date Reported:</strong> {{ id.date_reported }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No matching IDs found.</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Report a Lost or Found ID</title>
+    <link rel="stylesheet" href="{% static 'ids/styles.css' %}">
+</head>
+<body>
+    <h1>Report a Lost or Found ID</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <!--{{ form.as_p }}-->
+        <div><small>Enter ID number:</small>{{ form.id_number }}</div>
+        <div><small>Select your case:</small>{{ form.status }}</div>
+        <div><small>Location found/lost:</small>{{ form.location }}</div>
+        <div><small>make a decription:</small>{{ form.description }}</div>
+        
+
+        <div id="contact-info" style="display: none;">
+            <div>{{ form.email.label_tag }}
+                {{ form.email }}</div>
+            {{ form.phone_number.label_tag }}
+            {{ form.phone_number }}
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+    <a href="{% url 'search_id' %}">Search for Lost/Found IDs</a>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusField = document.querySelector('#id_status');
+            const contactInfo = document.querySelector('#contact-info');
+        
+            function toggleContactFields() {
+                console.log("Status changed to:", statusField.value);  // Debug message
+                if (statusField.value === 'lost') {
+                    contactInfo.style.display = 'block';
+                    console.log("Setting display to block");  // Debug message
+               } else {
+                   contactInfo.style.display = 'block !important';
+                   console.log("Setting display to none");  // Debug message
+               }
+            }
+        
+            statusField.addEventListener('change', toggleContactFields);
+            toggleContactFields();  // Run on page load
+        });
+    </script>
+
+</body>
+</html>
