@@ -76,14 +76,14 @@ WSGI_APPLICATION = 'lost_and_found.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'lostfounddb',
-        'USER': 'postgres',
-        'PASSWORD': '@arrown',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(default='postgresql://lost_found_app_ol4f_user:XSfStYtxkIbuqvYmK94uUFRds0uOICfq@dpg-cuvcgrt6l47c738qdefg-a/lost_found_app_ol4f')
+    #{
+       # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        #'NAME': 'lostfounddb',
+        #'USER': 'postgres',
+        #'PASSWORD': '@arrown',
+        #'HOST': 'localhost',
+        #'PORT': '5432',}
 }
 
 
