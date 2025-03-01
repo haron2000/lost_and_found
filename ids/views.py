@@ -9,6 +9,8 @@ def report_id(request):
     if request.method == 'POST':
         form = LostFoundIDForm(request.POST)
         if form.is_valid():
+            lost_id=form.save(commit=False)
+            print(lost_id.longitude)
             form.save()
             return redirect('success')  # Redirect to a success page
     else:

@@ -4,7 +4,7 @@ from .models import LostFoundID
 class LostFoundIDForm(forms.ModelForm):
     class Meta:
         model = LostFoundID
-        fields = ['id_number', 'status', 'location', 'description', 'email', 'phone_number']
+        fields = ['id_number', 'status', 'location','latitude','longitude', 'description', 'email', 'phone_number']
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

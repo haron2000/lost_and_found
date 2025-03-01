@@ -4,6 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Report a Lost or Found ID</title>
+<<<<<<< Updated upstream
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -41,10 +42,108 @@
         {{ form.phone_number.label_tag }} {{ form.phone_number }}
       </div>
       <button type="submit">Submit</button>
+=======
+    <link rel="stylesheet" href="{% static 'ids/styles.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        /* Add some basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .form-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+        .form-group button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Report a Lost or Found ID</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <div>
+            <small>Enter ID number:</small>
+            {{ form.id_number }}
+        </div>
+        <div>
+            <small>Select your case:</small>
+            {{ form.status }}
+        </div>
+        <div>
+            <small>Location found/lost:</small>
+            {{ form.location }}
+        </div>
+        <div>
+            <small>Make a description:</small>
+            {{ form.description }}
+        </div>
+
+        <div id="contact-info" style="display: none;">
+            <div>
+                {{ form.email.label_tag }}
+                {{ form.email }}
+            </div>
+            <div>
+                {{ form.phone_number.label_tag }}
+                {{ form.phone_number }}
+            </div>
+        </div>
+        
+        <div id="map" style="height: 400px; width: 100%;"></div>
+        <input type="hidden" id="latitude" name="latitude">
+        <input type="hidden" id="longitude" name="longitude">
+        <button type="submit">Submit</button>
+>>>>>>> Stashed changes
     </form>
     <a href="{% url 'search_id' %}">Search for Lost/Found IDs</a>
 
     <script>
+<<<<<<< Updated upstream
       document.addEventListener("DOMContentLoaded", function () {
         const statusField = document.querySelector("#id_status");
         const contactInfo = document.querySelector("#contact-info");
@@ -65,4 +164,52 @@
       });
     </script>
   </body>
+=======
+        // Initialize the map centered on Nairobi by default
+        const map = L.map('map').setView([-1.286389, 36.817223], 13);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Add a draggable marker
+        const marker = L.marker([-1.286389, 36.817223], { draggable: true }).addTo(map);
+
+        // Update latitude and longitude fields when marker is moved
+        marker.on('moveend', function (e) {
+            const position = e.target.getLatLng();
+            document.getElementById('latitude').value = position.lat;
+            document.getElementById('longitude').value = position.lng;
+        });
+
+        // Set the marker position if latitude and longitude fields are already populated
+        const latitudeField = document.getElementById('latitude');
+        const longitudeField = document.getElementById('longitude');
+        if (latitudeField.value && longitudeField.value) {
+            const lat = parseFloat(latitudeField.value);
+            const lng = parseFloat(longitudeField.value);
+            marker.setLatLng([lat, lng]);
+            map.setView([lat, lng], 13);
+        }
+
+        // Toggle contact info fields based on the status selection
+        document.addEventListener('DOMContentLoaded', function () {
+            const statusField = document.querySelector('#id_status');
+            const contactInfo = document.querySelector('#contact-info');
+
+            function toggleContactFields() {
+                if (statusField.value === 'lost') {
+                    contactInfo.style.display = 'block';
+                } else {
+                    contactInfo.style.display = 'none';
+                }
+            }
+
+            statusField.addEventListener('change', toggleContactFields);
+            toggleContactFields();  // Run on page load
+        });
+    </script>
+</body>
+>>>>>>> Stashed changes
 </html>
